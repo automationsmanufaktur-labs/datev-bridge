@@ -1,0 +1,6 @@
+balance_transaction_id,created,available_on,currency,gross,fee,net,reporting_category,description,automatic_payout_id
+txn_0001,2026-01-05 10:00:00,2026-01-07 00:00:00,eur,119.00,2.50,116.50,charge,Rechnung INV-1001,po_0001
+txn_0002,2026-01-08 14:20:00,2026-01-10 00:00:00,eur,238.00,4.20,233.80,charge,Rechnung INV-1002 Büro,po_0001
+txn_0003,2026-01-12 09:15:00,2026-01-14 00:00:00,eur,-59.50,0.00,-59.50,refund,Erstattung INV-1001 (Teilbetrag),
+txn_0004,2026-01-15 00:00:00,2026-01-15 00:00:00,eur,-2.00,0.00,-2.00,stripe_fee,Stripe Billing-Gebühr Januar,
+txn_0005,2026-01-16 00:00:00,2026-01-16 00:00:00,eur,-288.80,0.00,-288.80,payout,STRIPE PAYOUT,po_0001

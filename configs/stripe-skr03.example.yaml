@@ -1,0 +1,35 @@
+# datev-bridge — Stripe → DATEV mapping (SKR03)
+#
+# Copy this file, adjust the numbers to YOUR chart of accounts, and pass it with
+#   datev-bridge stripe-export.csv -o buchungsstapel.csv -c my-mapping.yaml
+#
+# Every value here is only a starting default. The accounting defaults reflect
+# common German practice for Stripe, but tax keys and accounts MUST be confirmed
+# by your tax advisor. datev-bridge is format-compatible with DATEV EXTF — it is
+# not a DATEV product, not certified, and gives no GoBD guarantee.
+
+meta:
+  skr: SKR03
+  beraterNr: 1001          # <-- your DATEV Berater-Nr (>= 1001), required for real imports
+  mandantNr: 1             # <-- your DATEV Mandanten-Nr
+  wirtschaftsjahrBeginn: "01-01"   # MM-DD; year is taken from the data
+  sachkontenlaenge: 4      # must match the mandant setup in DATEV
+  bezeichnung: "Stripe Buchungsstapel"
+  currency: EUR
+  festschreibung: 0        # 0 = advisor reviews before locking, 1 = festgeschrieben
+
+accounts:
+  geldtransit: 1360        # Stripe clearing / Geldtransit — a payout is a transfer, not revenue
+  bank: 1200               # bank account that receives payouts
+  revenue19: 8400          # Erlöse 19% USt (Automatikkonto → tax derived by DATEV)
+  revenue7: 8300           # Erlöse 7% USt (Automatikkonto)
+  fees: 4970               # Nebenkosten des Geldverkehrs (Stripe fees)
+
+taxKeys:
+  revenue19: ""            # empty: 8400 is an automatic account, DATEV applies 19%
+  revenue7: ""             # empty: 8300 is an automatic account, DATEV applies 7%
+  fees: "506"              # §13b reverse charge EU 19% — Stripe bills from Ireland.
+                           # Do NOT use BU 94 (would require manual EU selection per booking).
+
+options:
+  defaultVatRate: "19"     # VAT bucket applied to charges (per-line VAT detection = roadmap)

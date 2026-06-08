@@ -1,0 +1,10 @@
+node_modules/
+dist/
+coverage/
+*.log
+.DS_Store
+.env
+.env.*
+# generated output of local runs
+buchungsstapel.csv
+*.EXTF.csv

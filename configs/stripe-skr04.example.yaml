@@ -1,0 +1,33 @@
+# datev-bridge — Stripe → DATEV mapping (SKR04)
+#
+# Copy, adjust to YOUR chart of accounts, and pass with:
+#   datev-bridge stripe-export.csv -o buchungsstapel.csv -c my-mapping.yaml
+#
+# Defaults reflect common German practice for Stripe but MUST be confirmed by
+# your tax advisor. Format-compatible with DATEV EXTF — not a DATEV product,
+# not certified, no GoBD guarantee.
+
+meta:
+  skr: SKR04
+  beraterNr: 1001          # <-- your DATEV Berater-Nr (>= 1001)
+  mandantNr: 1             # <-- your DATEV Mandanten-Nr
+  wirtschaftsjahrBeginn: "01-01"
+  sachkontenlaenge: 4
+  bezeichnung: "Stripe Buchungsstapel"
+  currency: EUR
+  festschreibung: 0
+
+accounts:
+  geldtransit: 1460        # Stripe clearing / Geldtransit (SKR04)
+  bank: 1800               # bank account that receives payouts
+  revenue19: 4400          # Erlöse 19% USt (Automatikkonto)
+  revenue7: 4300           # Erlöse 7% USt (Automatikkonto)
+  fees: 6855               # Nebenkosten des Geldverkehrs (Stripe fees)
+
+taxKeys:
+  revenue19: ""
+  revenue7: ""
+  fees: "506"              # §13b reverse charge EU 19%
+
+options:
+  defaultVatRate: "19"
