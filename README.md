@@ -1,15 +1,26 @@
-# datev-bridge
+<div align="center">
 
-> Convert CSV exports from payment tools into a **DATEV EXTF Buchungsstapel** — adapter-based, with a declarative, versioned mapping. Stripe today; PayPal, Shopify, bank CSV next.
+<img src="https://raw.githubusercontent.com/juli1111/datev-bridge/main/assets/banner.svg" alt="datev-bridge — Stripe CSV to DATEV EXTF Buchungsstapel" width="100%" />
 
-[![CI](https://github.com/juli1111/datev-bridge/actions/workflows/ci.yml/badge.svg)](https://github.com/juli1111/datev-bridge/actions/workflows/ci.yml) [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE) [![Node](https://img.shields.io/badge/node-%3E%3D18-brightgreen)](#requirements)
+<p>
+  <a href="https://www.npmjs.com/package/datev-bridge"><img src="https://img.shields.io/npm/v/datev-bridge?color=3FB950&amp;label=npm" alt="npm version" /></a>
+  <a href="https://github.com/juli1111/datev-bridge/actions/workflows/ci.yml"><img src="https://github.com/juli1111/datev-bridge/actions/workflows/ci.yml/badge.svg" alt="CI" /></a>
+  <a href="./LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License: MIT" /></a>
+  <img src="https://img.shields.io/badge/node-%3E%3D18-brightgreen" alt="Node >= 18" />
+</p>
+
+<strong>Convert CSV exports from payment tools into a DATEV EXTF Buchungsstapel</strong><br />
+adapter-based, with a declarative, versioned mapping. Stripe today; PayPal, Shopify, bank CSV next.
+
+</div>
 
 ```bash
 npx datev-bridge stripe-export.csv -o buchungsstapel.csv
 ```
 
-<!-- TODO: replace with a real terminal recording -->
-<p align="center"><em>[ quickstart.gif placeholder — asciinema recording of the command above ]</em></p>
+<p align="center">
+  <img src="https://raw.githubusercontent.com/juli1111/datev-bridge/main/assets/terminal.svg" alt="Terminal demo: 7 bookings from 5 transactions, Soll = Haben check" width="760" />
+</p>
 
 ---
 
@@ -24,10 +35,9 @@ The existing open-source tools either pull from the **API** (needs keys) or are 
 
 ## What it does
 
-```
-Stripe CSV ──▶ [adapter] ──▶ Transaction[] ──▶ [mapping engine + YAML config] ──▶ Booking[] ──▶ [EXTF writer] ──▶ buchungsstapel.csv
-              normalize        source-agnostic        accounts & tax keys                       125 cols · CP-1252 · CRLF
-```
+<p align="center">
+  <img src="https://raw.githubusercontent.com/juli1111/datev-bridge/main/assets/pipeline.svg" alt="Pipeline: Stripe CSV → adapter → Transaction[] → mapping + YAML → Booking[] → EXTF writer → buchungsstapel.csv" width="100%" />
+</p>
 
 - **Source adapters** normalize a provider's CSV into a provider-agnostic transaction model. New source = one new adapter.
 - **Declarative mapping** (YAML, validated with Zod) holds your accounts and tax keys — nothing is hardcoded.

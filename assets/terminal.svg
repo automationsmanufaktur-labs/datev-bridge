@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 312" role="img" aria-label="Terminal demo of datev-bridge converting a Stripe CSV">
+  <defs>
+    <style>
+      .mono { font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace; }
+    </style>
+  </defs>
+  <!-- window -->
+  <rect x="8" y="8" width="844" height="296" rx="12" fill="#0D1117" stroke="#30363D"/>
+  <!-- title bar -->
+  <path d="M8 20 a12 12 0 0 1 12 -12 h820 a12 12 0 0 1 12 12 v28 h-844 z" fill="#161B22"/>
+  <circle cx="32" cy="34" r="6" fill="#FF5F56"/>
+  <circle cx="54" cy="34" r="6" fill="#FEBC2E"/>
+  <circle cx="76" cy="34" r="6" fill="#27C93F"/>
+  <text x="430" y="39" text-anchor="middle" class="mono" font-size="13" fill="#6E7681">datev-bridge — zsh</text>
+
+  <!-- body -->
+  <g class="mono" font-size="14.5">
+    <!-- command -->
+    <text x="28" y="92">
+      <tspan fill="#3FB950">$ </tspan><tspan fill="#E6EDF3">npx datev-bridge stripe-export.csv -o buchungsstapel.csv</tspan>
+    </text>
+    <!-- success line -->
+    <text x="28" y="124">
+      <tspan fill="#3FB950">✓ </tspan><tspan fill="#E6EDF3">7 Buchungen aus 5 Transaktionen → buchungsstapel.csv</tspan>
+    </text>
+    <text x="28" y="150" fill="#8B949E">  SKR: SKR03 · Berater 12345 · Mandant 678 · Encoding Windows-1252</text>
+    <text x="28" y="176" fill="#8B949E">  Umsätze: 2 · Erstattungen: 1 · Gebühren: 1 · Auszahlungen: 1</text>
+    <!-- balance line highlighted -->
+    <text x="28" y="202">
+      <tspan fill="#C9D1D9">  Soll </tspan><tspan fill="#E6EDF3">714,00 €</tspan><tspan fill="#3FB950"> = </tspan><tspan fill="#C9D1D9">Haben </tspan><tspan fill="#E6EDF3">714,00 €</tspan><tspan fill="#3FB950"> ✓</tspan>
+    </text>
+    <!-- disclaimer -->
+    <text x="28" y="236" fill="#6E7681" font-size="12.5">Hinweis: FORMAT-kompatibel, nicht DATEV-zertifiziert, keine GoBD-Garantie.</text>
+    <text x="28" y="254" fill="#6E7681" font-size="12.5">Konten und Steuerschlüssel vom Steuerberater prüfen lassen.</text>
+    <!-- blinking caret line -->
+    <text x="28" y="286">
+      <tspan fill="#3FB950">$ </tspan><tspan fill="#E6EDF3">▋</tspan>
+    </text>
+  </g>
+</svg>

@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 250" role="img" aria-label="Pipeline: Stripe CSV through adapter, mapping and writer to a DATEV EXTF file">
+  <defs>
+    <style>
+      .sans { font-family: ui-sans-serif, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+      .mono { font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace; }
+    </style>
+  </defs>
+  <rect width="1280" height="250" fill="#0B0E14"/>
+  <rect x="0.5" y="0.5" width="1279" height="249" fill="none" stroke="#232A36"/>
+
+  <!-- nodes: x = 40, 360, 680, 1000 ; width 240 ; y 78 ; h 96 -->
+  <!-- node 1: Stripe CSV (indigo) -->
+  <g transform="translate(40,78)">
+    <rect width="240" height="96" rx="16" fill="#11131F" stroke="#3A3F66"/>
+    <text x="120" y="44" text-anchor="middle" class="mono" font-size="20" fill="#7C83FF">Stripe CSV</text>
+    <text x="120" y="70" text-anchor="middle" class="sans" font-size="14" fill="#6E7681">itemized balance</text>
+  </g>
+
+  <!-- node 2: Transaction[] -->
+  <g transform="translate(360,78)">
+    <rect width="240" height="96" rx="16" fill="#11151F" stroke="#2C3340"/>
+    <text x="120" y="44" text-anchor="middle" class="mono" font-size="20" fill="#E6EDF3">Transaction[]</text>
+    <text x="120" y="70" text-anchor="middle" class="sans" font-size="14" fill="#6E7681">normalized · cents</text>
+  </g>
+
+  <!-- node 3: Booking[] -->
+  <g transform="translate(680,78)">
+    <rect width="240" height="96" rx="16" fill="#11151F" stroke="#2C3340"/>
+    <text x="120" y="44" text-anchor="middle" class="mono" font-size="20" fill="#E6EDF3">Booking[]</text>
+    <text x="120" y="70" text-anchor="middle" class="sans" font-size="14" fill="#6E7681">SKR03/04 · §13b</text>
+  </g>
+
+  <!-- node 4: EXTF file (green) -->
+  <g transform="translate(1000,78)">
+    <rect width="240" height="96" rx="16" fill="#101A14" stroke="#2E5B39"/>
+    <text x="120" y="42" text-anchor="middle" class="mono" font-size="18" fill="#3FB950">buchungsstapel.csv</text>
+    <text x="120" y="68" text-anchor="middle" class="sans" font-size="14" fill="#6E7681">CP-1252 · 125 cols</text>
+  </g>
+
+  <!-- arrows + labels: gaps centered at x=320, 640, 960, y=126 -->
+  <g class="mono" font-size="14" fill="#8B949E" text-anchor="middle">
+    <g stroke="#3FB950" stroke-width="3" stroke-linecap="round" fill="none">
+      <line x1="288" y1="126" x2="350" y2="126"/>
+      <line x1="608" y1="126" x2="670" y2="126"/>
+      <line x1="928" y1="126" x2="990" y2="126"/>
+    </g>
+    <g fill="#3FB950" stroke="none">
+      <path d="M350 119 L364 126 L350 133 Z"/>
+      <path d="M670 119 L684 126 L670 133 Z"/>
+      <path d="M990 119 L1004 126 L990 133 Z"/>
+    </g>
+    <text x="322" y="112">adapter</text>
+    <text x="642" y="112">mapping + YAML</text>
+    <text x="962" y="112">EXTF writer</text>
+  </g>
+
+  <text x="40" y="222" class="sans" font-size="14" fill="#6E7681">Decoupled layers — a new payment source is just one new adapter + an example config.</text>
+</svg>
