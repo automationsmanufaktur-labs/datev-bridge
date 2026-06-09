@@ -12,6 +12,8 @@
 <strong>Convert CSV exports from payment tools into a DATEV EXTF Buchungsstapel</strong><br />
 adapter-based, with a declarative, versioned mapping. Stripe today; PayPal, Shopify, bank CSV next.
 
+**English** · [Deutsch](README.de.md)
+
 </div>
 
 ```bash
