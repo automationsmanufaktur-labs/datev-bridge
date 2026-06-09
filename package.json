@@ -49,13 +49,13 @@
   ],
   "author": "Julian Abt",
   "license": "MIT",
-  "homepage": "https://github.com/juli1111/datev-bridge#readme",
+  "homepage": "https://github.com/automationsmanufaktur-labs/datev-bridge#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/juli1111/datev-bridge.git"
+    "url": "git+https://github.com/automationsmanufaktur-labs/datev-bridge.git"
   },
   "bugs": {
-    "url": "https://github.com/juli1111/datev-bridge/issues"
+    "url": "https://github.com/automationsmanufaktur-labs/datev-bridge/issues"
   },
   "dependencies": {
     "commander": "^12.1.0",

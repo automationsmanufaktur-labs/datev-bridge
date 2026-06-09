@@ -1,10 +1,10 @@
 <div align="center">
 
-<img src="https://raw.githubusercontent.com/juli1111/datev-bridge/main/assets/banner.svg" alt="datev-bridge — Stripe CSV to DATEV EXTF Buchungsstapel" width="100%" />
+<img src="https://raw.githubusercontent.com/automationsmanufaktur-labs/datev-bridge/main/assets/banner.svg" alt="datev-bridge — Stripe CSV to DATEV EXTF Buchungsstapel" width="100%" />
 
 <p>
   <a href="https://www.npmjs.com/package/datev-bridge"><img src="https://img.shields.io/npm/v/datev-bridge?color=3FB950&amp;label=npm" alt="npm version" /></a>
-  <a href="https://github.com/juli1111/datev-bridge/actions/workflows/ci.yml"><img src="https://github.com/juli1111/datev-bridge/actions/workflows/ci.yml/badge.svg" alt="CI" /></a>
+  <a href="https://github.com/automationsmanufaktur-labs/datev-bridge/actions/workflows/ci.yml"><img src="https://github.com/automationsmanufaktur-labs/datev-bridge/actions/workflows/ci.yml/badge.svg" alt="CI" /></a>
   <a href="./LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License: MIT" /></a>
   <img src="https://img.shields.io/badge/node-%3E%3D18-brightgreen" alt="Node >= 18" />
 </p>
@@ -19,7 +19,7 @@ npx datev-bridge stripe-export.csv -o buchungsstapel.csv
 ```
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/juli1111/datev-bridge/main/assets/terminal.svg" alt="Terminal demo: 7 bookings from 5 transactions, Soll = Haben check" width="760" />
+  <img src="https://raw.githubusercontent.com/automationsmanufaktur-labs/datev-bridge/main/assets/terminal.svg" alt="Terminal demo: 7 bookings from 5 transactions, Soll = Haben check" width="760" />
 </p>
 
 ---
@@ -36,7 +36,7 @@ The existing open-source tools either pull from the **API** (needs keys) or are 
 ## What it does
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/juli1111/datev-bridge/main/assets/pipeline.svg" alt="Pipeline: Stripe CSV → adapter → Transaction[] → mapping + YAML → Booking[] → EXTF writer → buchungsstapel.csv" width="100%" />
+  <img src="https://raw.githubusercontent.com/automationsmanufaktur-labs/datev-bridge/main/assets/pipeline.svg" alt="Pipeline: Stripe CSV → adapter → Transaction[] → mapping + YAML → Booking[] → EXTF writer → buchungsstapel.csv" width="100%" />
 </p>
 
 - **Source adapters** normalize a provider's CSV into a provider-agnostic transaction model. New source = one new adapter.

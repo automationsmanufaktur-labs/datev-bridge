@@ -34,5 +34,5 @@ All notable changes to this project are documented here. The format is based on
   and pRAP period accrual are not yet booked (skipped with a warning).
 - Output is validated against the documented spec, not against a live DATEV import.
 
-[Unreleased]: https://github.com/juli1111/datev-bridge/compare/v0.1.0...HEAD
-[0.1.0]: https://github.com/juli1111/datev-bridge/releases/tag/v0.1.0
+[Unreleased]: https://github.com/automationsmanufaktur-labs/datev-bridge/compare/v0.1.0...HEAD
+[0.1.0]: https://github.com/automationsmanufaktur-labs/datev-bridge/releases/tag/v0.1.0
