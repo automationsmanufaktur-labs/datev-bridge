@@ -70,5 +70,13 @@
     "typescript": "^5.5.4",
     "typescript-eslint": "^8.3.0",
     "vitest": "^4.1.8"
+  },
+  "comments": {
+    "overrides": "Pin the @emnapi/* chain pulled in by rolldown's optional wasm32-wasi binding (via vitest 4). The wasm fallback is never used on native platforms, but npm ci validates its lockfile entries strictly, and npm resolves the versions inconsistently. Pinning keeps npm ci deterministic."
+  },
+  "overrides": {
+    "@emnapi/core": "1.11.0",
+    "@emnapi/runtime": "1.11.0",
+    "@emnapi/wasi-threads": "1.2.2"
   }
 }
