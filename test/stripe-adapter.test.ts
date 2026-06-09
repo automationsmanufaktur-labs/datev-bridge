@@ -55,3 +55,19 @@ describe('stripeAdapter', () => {
     expect(parsed[0]!.category).toBe('charge');
   });
 });
+
+describe('stripeAdapter input guards', () => {
+  it('rejects an empty file with a clear message', () => {
+    expect(() => stripeAdapter.parse('')).toThrow(/empty/i);
+  });
+
+  it('rejects the wrong Stripe report and points to the right one', () => {
+    const wrong = ['id,amount,status', 'pi_1,1000,succeeded'].join('\n');
+    expect(() => stripeAdapter.parse(wrong)).toThrow(/Itemized balance change/);
+  });
+
+  it('names the missing columns', () => {
+    const noGross = ['created,reporting_category', '2026-01-01,charge'].join('\n');
+    expect(() => stripeAdapter.parse(noGross)).toThrow(/gross/);
+  });
+});

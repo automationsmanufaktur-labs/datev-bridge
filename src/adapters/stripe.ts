@@ -68,11 +68,40 @@ function field(row: Record<string, string>, key: string): string {
   return row[key]?.trim() ?? '';
 }
 
+/**
+ * Guard against the most common mistake: feeding the wrong Stripe export. The
+ * "Itemized balance change" report has the columns we need; the "Payments" or a
+ * summary report does not. We fail early with a pointer instead of producing a
+ * silently wrong file.
+ */
+function assertStripeColumns(firstRow: Record<string, string> | undefined): void {
+  if (!firstRow) return;
+  const present = new Set(Object.keys(firstRow));
+  const missing: string[] = [];
+  if (!present.has('created')) missing.push('created');
+  if (!present.has('gross')) missing.push('gross');
+  if (!present.has('reporting_category') && !present.has('type')) {
+    missing.push('reporting_category (or type)');
+  }
+  if (missing.length > 0) {
+    throw new Error(
+      `This does not look like a Stripe "Itemized balance change" export ` +
+        `(missing column(s): ${missing.join(', ')}).\n` +
+        `In Stripe: Reports → Balance → "Balance change from activity" → export the ` +
+        `Itemized report. See https://docs.stripe.com/reports/report-types/balance`,
+    );
+  }
+}
+
 export const stripeAdapter: SourceAdapter = {
   id: 'stripe',
   name: 'Stripe (Balance change / Itemized CSV)',
 
   parse(csv: string): NormalizedTransaction[] {
+    if (csv.trim() === '') {
+      throw new Error('The input file is empty.');
+    }
+
     const records = parse(csv, {
       columns: (headers: string[]) => headers.map(normalizeHeader),
       skip_empty_lines: true,
@@ -80,6 +109,12 @@ export const stripeAdapter: SourceAdapter = {
       bom: true,
       relax_column_count: true,
     }) as Record<string, string>[];
+
+    if (records.length === 0) {
+      throw new Error('The input file has a header but no data rows.');
+    }
+
+    assertStripeColumns(records[0]);
 
     const transactions: NormalizedTransaction[] = [];
 

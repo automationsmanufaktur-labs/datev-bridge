@@ -65,6 +65,13 @@ describe('convert (Stripe fixture → EXTF)', () => {
     expect(result.config.meta.beraterNr).toBe(4711);
     expect(result.config.meta.skr).toBe('SKR03');
   });
+
+  it('returns a balanced, categorized summary', () => {
+    expect(result.summary.balanced).toBe(true);
+    expect(result.summary.totalDebitCents).toBe(result.summary.totalCreditCents);
+    expect(result.summary.byCategory).toEqual({ charge: 2, refund: 1, fee: 1, payout: 1 });
+    expect(result.bookings).toHaveLength(7);
+  });
 });
 
 describe('convert balances the Geldtransit account', () => {

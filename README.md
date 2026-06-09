@@ -2,7 +2,7 @@
 
 > Convert CSV exports from payment tools into a **DATEV EXTF Buchungsstapel** — adapter-based, with a declarative, versioned mapping. Stripe today; PayPal, Shopify, bank CSV next.
 
-[![CI](https://img.shields.io/badge/tests-passing-brightgreen)](#development) [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE) [![Node](https://img.shields.io/badge/node-%3E%3D18-brightgreen)](#requirements)
+[![CI](https://github.com/juli1111/datev-bridge/actions/workflows/ci.yml/badge.svg)](https://github.com/juli1111/datev-bridge/actions/workflows/ci.yml) [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE) [![Node](https://img.shields.io/badge/node-%3E%3D18-brightgreen)](#requirements)
 
 ```bash
 npx datev-bridge stripe-export.csv -o buchungsstapel.csv

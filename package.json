@@ -19,6 +19,7 @@
     "dist",
     "configs",
     "README.md",
+    "CHANGELOG.md",
     "LICENSE"
   ],
   "engines": {
@@ -68,6 +69,6 @@
     "tsup": "^8.2.4",
     "typescript": "^5.5.4",
     "typescript-eslint": "^8.3.0",
-    "vitest": "^2.0.5"
+    "vitest": "^4.1.8"
   }
 }

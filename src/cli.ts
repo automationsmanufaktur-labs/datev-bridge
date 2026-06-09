@@ -1,14 +1,25 @@
 #!/usr/bin/env node
-import { readFileSync, writeFileSync } from 'node:fs';
+import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import { Command, Option } from 'commander';
 import { parse as parseYaml } from 'yaml';
 import { convert, type ConfigOverrides } from './index';
 import { listAdapters } from './adapters';
+import type { TxCategory } from './model/transaction';
+import { formatCentsDe } from './util/money';
 
 const DISCLAIMER =
   'Hinweis: datev-bridge erzeugt ein zum DATEV-EXTF-Import FORMAT-kompatibles ' +
   'Buchungsstapel-CSV. Es ist kein DATEV-Produkt, nicht DATEV-zertifiziert und ' +
   'gibt keine GoBD-Garantie. Konten und Steuerschlüssel vom Steuerberater prüfen lassen.';
+
+const CATEGORY_LABELS: Record<TxCategory, string> = {
+  charge: 'Umsätze',
+  refund: 'Erstattungen',
+  fee: 'Gebühren (einzeln)',
+  payout: 'Auszahlungen',
+  adjustment: 'Korrekturen',
+  other: 'Sonstige',
+};
 
 interface CliOptions {
   output: string;
@@ -28,6 +39,13 @@ function buildOverrides(opts: CliOptions): ConfigOverrides {
   if (opts.mandant !== undefined) overrides.mandantNr = Number(opts.mandant);
   if (opts.bezeichnung !== undefined) overrides.bezeichnung = opts.bezeichnung;
   return overrides;
+}
+
+function readInput(path: string, label: string): string {
+  if (!existsSync(path)) {
+    throw new Error(`${label} not found: "${path}". Check the path and try again.`);
+  }
+  return readFileSync(path, 'utf8');
 }
 
 const program = new Command();
@@ -52,12 +70,18 @@ program
   .option('--mandant <nr>', 'DATEV Mandanten-Nr')
   .option('--bezeichnung <text>', 'batch label shown in DATEV')
   .option('--stdout', 'write EXTF bytes to stdout instead of a file')
-  .addHelpText('after', `\n${DISCLAIMER}`)
+  .addHelpText(
+    'after',
+    `\nExample:\n` +
+      `  $ datev-bridge stripe-itemized.csv -o buchungsstapel.csv --berater 12345 --mandant 678\n` +
+      `\nGet the input in Stripe: Reports → Balance → "Balance change from activity" → export the Itemized report.\n` +
+      `\n${DISCLAIMER}`,
+  )
   .action((input: string, opts: CliOptions) => {
     try {
-      const csv = readFileSync(input, 'utf8');
+      const csv = readInput(input, 'Input CSV');
       const userConfig: unknown = opts.config
-        ? parseYaml(readFileSync(opts.config, 'utf8'))
+        ? parseYaml(readInput(opts.config, 'Config file'))
         : undefined;
 
       const result = convert({
@@ -74,18 +98,33 @@ program
       }
 
       const out = opts.stdout ? '(stdout)' : opts.output;
-      process.stderr.write(
-        `✓ ${result.bookingCount} Buchungen aus ${result.transactionCount} Transaktionen → ${out}\n` +
-          `  SKR: ${result.config.meta.skr} · Berater ${result.config.meta.beraterNr} · ` +
-          `Mandant ${result.config.meta.mandantNr} · Encoding Windows-1252\n`,
+      const meta = result.config.meta;
+      const lines: string[] = [
+        `✓ ${result.bookingCount} Buchungen aus ${result.transactionCount} Transaktionen → ${out}`,
+        `  SKR: ${meta.skr} · Berater ${meta.beraterNr} · Mandant ${meta.mandantNr} · Encoding Windows-1252`,
+      ];
+
+      const breakdown = Object.entries(result.summary.byCategory)
+        .map(([cat, n]) => `${CATEGORY_LABELS[cat as TxCategory]}: ${n}`)
+        .join(' · ');
+      if (breakdown) lines.push(`  ${breakdown}`);
+
+      const soll = formatCentsDe(result.summary.totalDebitCents);
+      const haben = formatCentsDe(result.summary.totalCreditCents);
+      lines.push(
+        `  Soll ${soll} € ${result.summary.balanced ? '=' : '≠'} Haben ${haben} €` +
+          ` ${result.summary.balanced ? '✓' : '✗ (bitte prüfen!)'}`,
       );
+
+      process.stderr.write(lines.join('\n') + '\n');
+
       if (result.skipped > 0) {
         process.stderr.write(`  ⚠ ${result.skipped} Transaktion(en) übersprungen:\n`);
         for (const warning of result.warnings) {
           process.stderr.write(`    - ${warning}\n`);
         }
       }
-      if (result.config.meta.beraterNr === 1001 || result.config.meta.mandantNr === 1) {
+      if (meta.beraterNr === 1001 || meta.mandantNr === 1) {
         process.stderr.write(
           '  ⚠ Berater-/Mandanten-Nr sind Platzhalter. Für den echten Import via --berater/--mandant setzen.\n',
         );
